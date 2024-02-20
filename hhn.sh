@@ -33,7 +33,7 @@ IFS=',' read -r -a scores_array <<< "$scores"
 # parallelized example.
 
 # Compile Fortran module.
-cd ../src
+cd ./src
 f2py -c fortran_module.f95 -m fortran_module > /dev/null
 cd ..
 
@@ -164,7 +164,7 @@ for network in "$network"; do
       -oigf "$intermediate/"$network"_"$score"/hierarchy_index_gene_0.tsv" \
       -pelf $(for i in $(seq $num_permutations); do echo "$intermediate/"$network"_"$score"/hierarchy_edge_list_${i}.tsv "; done) \
       -pigf $(for i in $(seq $num_permutations); do echo "$intermediate/"$network"_"$score"/hierarchy_index_gene_${i}.tsv "; done) \
-      -lsb 1 \
+      -lsb 10 \
       -cf "$results/clusters_"$network"_"$score".tsv" \
       -pl "$network" "$score" \
       -pf "$results/sizes_"$network"_"$score".pdf"

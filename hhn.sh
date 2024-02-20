@@ -44,16 +44,16 @@ cd ..
 ################################################################################
 
 # Create data, intermediate data and results, and results directories.
-mkdir -p "$data"
-mkdir -p "$intermediate"
-mkdir -p "$results"
+mkdir --p "$data"
+mkdir --p "$intermediate"
+mkdir --p "$results"
 
 # Create directories for network
-mkdir -p "$intermediate/$network"
+mkdir --p "$intermediate/$network"
 
 # Create directories for network and scores
 for score in "${scores_array[@]}"; do
-  mkdir -p "$intermediate/"$network"_"$score""
+  mkdir --p "$intermediate/"$network"_"$score""
 done
 
 ################################################################################
@@ -164,7 +164,7 @@ for network in "$network"; do
       -oigf "$intermediate/"$network"_"$score"/hierarchy_index_gene_0.tsv" \
       -pelf $(for i in $(seq $num_permutations); do echo "$intermediate/"$network"_"$score"/hierarchy_edge_list_${i}.tsv "; done) \
       -pigf $(for i in $(seq $num_permutations); do echo "$intermediate/"$network"_"$score"/hierarchy_index_gene_${i}.tsv "; done) \
-      -lsb 10 \
+      -lsb 1 \
       -cf "$results/clusters_"$network"_"$score".tsv" \
       -pl "$network" "$score" \
       -pf "$results/sizes_"$network"_"$score".pdf"

@@ -40,12 +40,6 @@ def run(args):
     if args.verbose:
         progress('Loading data...')
 
-    print("Length of component_files:", len(args.component_files))
-    print("Length of index_gene_files:", len(args.index_gene_files))
-    print("Length of edge_list_files:", len(args.edge_list_files))
-    print("Length of networks:", len(args.networks))
-    print("Length of scores:", len(args.scores))
-
     assert len(args.component_files)==len(args.index_gene_files)==len(args.edge_list_files)==len(args.networks)==len(args.scores)
 
     index_to_gene_collection = dict()

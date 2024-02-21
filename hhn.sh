@@ -177,14 +177,14 @@ done
 #
 ################################################################################
 
-echo "Performing consensus..."
+# echo "Performing consensus..."
 
-python src/perform_consensus.py \
-  -cf "$results/clusters_"$network"_"${scores_array[0]}".tsv" "$results/clusters_"$network"_"${scores_array[1]}".tsv" \
-  -igf "$data/"$network"_index_gene.tsv" "$data/"$network"_index_gene.tsv" \
-  -elf "$data/"$network"_edge_list.tsv" "$data/"$network"_edge_list.tsv" \
-  -n "$network" "$network" \
-  -s "${scores_array[@]}" \
-  -t 2 \
-  -cnf "$results/consensus_nodes.tsv" \
-  -cef "$results/consensus_edges.tsv"
+# python src/perform_consensus.py \
+#   -cf "$results/clusters_"$network"_"${scores_array[0]}".tsv" "$results/clusters_"$network"_"${scores_array[1]}".tsv" \
+#   -igf "$data/"$network"_index_gene.tsv" "$data/"$network"_index_gene.tsv" \
+#   -elf "$data/"$network"_edge_list.tsv" "$data/"$network"_edge_list.tsv" \
+#   -n "$network" "$network" \
+#   -s "${scores_array[@]}" \
+#   -t 2 \
+#   -cnf "$results/consensus_nodes.tsv" \
+#   -cef "$results/consensus_edges.tsv"

@@ -6,8 +6,8 @@ edges=""
 index=""
 output_file=""
 # data=$PWD/data
-intermediate="$PWD/intermediate"
-results="$PWD/results"
+intermediate="HHN/intermediate"
+results="HHN/results"
 
 num_permutations=100
 
@@ -34,7 +34,7 @@ fi
 # parallelized example.
 
 # Compile Fortran module.
-cd $PWD/src
+cd HHN/src
 f2py -c fortran_module.f95 -m fortran_module > /dev/null
 cd ..
 

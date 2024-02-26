@@ -6,8 +6,8 @@ edges=""
 index=""
 output_file=""
 # data=$PWD/data
-intermediate="HHN/intermediate"
-results="HHN/results"
+intermediate="/HHN/intermediate"
+results="/HHN/results"
 
 num_permutations=100
 
@@ -34,7 +34,7 @@ fi
 # parallelized example.
 
 # Compile Fortran module.
-cd HHN/src
+cd /HHN/src
 f2py -c fortran_module.f95 -m fortran_module > /dev/null
 cd ..
 
@@ -62,7 +62,7 @@ mkdir -p "$intermediate/network_score"
 ################################################################################
 
 
-python $PWD/src/construct_similarity_matrix.py \
+python src/construct_similarity_matrix.py \
 	-i   "$edges" \
 	-o   "$intermediate/network/similarity_matrix.h5" \
 	-bof "$intermediate/network/beta.txt"
@@ -82,7 +82,7 @@ cp "$edges" "$intermediate/network/edge_list_0.tsv"
 
     # Preserve connectivity of the observed graph.
     for i in `seq 1 4`; do
-      python $PWD/src/permute_network.py \
+      python src/permute_network.py \
         -i "$intermediate/network/edge_list_0.tsv" \
         -s "$i" \
         -c \
@@ -91,7 +91,7 @@ cp "$edges" "$intermediate/network/edge_list_0.tsv"
 
     # Do not preserve connectivity of the observed graph.
     for i in `seq 5 8`; do
-      python $PWD/src/permute_network.py \
+      python src/permute_network.py \
         -i "$intermediate/network/edge_list_0.tsv" \
         -s "$i" \
         -o "$intermediate/network/edge_list_${i}.tsv"
@@ -101,7 +101,7 @@ echo "Permuting scores..."
 
     cp "$scores" "$intermediate/network_score/scores_0.tsv"
 
-    python $PWD/src/find_permutation_bins.py \
+    python src/find_permutation_bins.py \
       -gsf "$intermediate/network_score/scores_0.tsv" \
       -igf "$index" \
       -elf "$edges" \
@@ -109,7 +109,7 @@ echo "Permuting scores..."
       -o "$intermediate/network_score/score_bins.tsv"
 
     for i in `seq $num_permutations`; do
-      python $PWD/src/permute_scores.py \
+      python src/permute_scores.py \
         -i "$intermediate/network_score/scores_0.tsv" \
         -bf "$intermediate/network_score/score_bins.tsv" \
         -s "$i" \
@@ -125,7 +125,7 @@ echo "Permuting scores..."
 echo "Constructing hierarchies..."
 
     for i in $(seq 0 $num_permutations); do
-      python $PWD/src/construct_hierarchy.py \
+      python src/construct_hierarchy.py \
         -smf "$intermediate/network/similarity_matrix.h5" \
         -igf "$index" \
         -gsf "$intermediate/network_score/scores_${i}.tsv" \
@@ -143,7 +143,7 @@ echo "Processing hierarchies..."
 
 # This example uses -lsb/--lower_size_bound 1 because it is a small toy example
 # with 25 vertices.  Use larger value (default is 10) for larger graphs.
-    python $PWD/src/process_hierarchies.py \
+    python src/process_hierarchies.py \
       -oelf "$intermediate/network_score/hierarchy_edge_list_0.tsv" \
       -oigf "$intermediate/network_score/hierarchy_index_gene_0.tsv" \
       -pelf $(for i in $(seq $num_permutations); do echo "$intermediate/network_score/hierarchy_edge_list_${i}.tsv "; done) \

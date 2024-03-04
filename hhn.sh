@@ -149,6 +149,24 @@ echo "Processing hierarchies..."
       -pelf $(for i in $(seq $num_permutations); do echo "$intermediate/network_score/hierarchy_edge_list_${i}.tsv "; done) \
       -pigf $(for i in $(seq $num_permutations); do echo "$intermediate/network_score/hierarchy_index_gene_${i}.tsv "; done) \
       -lsb 1 \
-      -cf "$output_file" \
+      -cf "$results/clusters_network_scores.tsv" \
       -pl "network" "score" \
       -pf "$results/sizes_network_score.pdf"
+
+################################################################################
+#
+#   Perform consensus.
+#
+################################################################################
+
+echo "Performing consensus..."
+
+python src/perform_consensus.py \
+    -cf  "$results/clusters_network_scores.tsv" "$results/clusters_network_scores.tsv" \
+    -igf $index $index \
+    -elf $edges $edges \
+    -n   "network" "network" \
+    -s   "score" "score" \
+    -t   2 \
+    -cnf $results/consensus_nodes.tsv \
+    -cef $output_file
